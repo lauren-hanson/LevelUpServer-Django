@@ -1,0 +1,12 @@
+[
+    {
+        "model": "levelupapi.event",
+        "pk": 1,
+        "fields": {
+            "game": 2,
+            "description": "Will be fun. Woo.", 
+            "date": "2023-09-04", 
+            "time": "06:00"
+        }
+    }
+]

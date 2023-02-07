@@ -1,0 +1,27 @@
+[
+    {
+        "model": "levelupapi.game",
+        "pk": 1,
+        "fields": {
+            "title": "Battleship",
+            "maker": "Milton Bradley", 
+            "game_type": 1, 
+            "gamer": 1, 
+            "num_of_players": 2, 
+            "skill_level": 2
+        }
+    }, 
+    {
+        "model": "levelupapi.game",
+        "pk": 2,
+        "fields": {
+            "title": "World of Warcraft",
+            "maker": "Blizzard Entertainment", 
+            "game_type": 3, 
+            "gamer": 1, 
+            "num_of_players": 237000000, 
+            "skill_level": 8
+        }
+    }
+
+]
