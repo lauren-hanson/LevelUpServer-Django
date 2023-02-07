@@ -8,5 +8,15 @@
             "date": "2023-09-04", 
             "time": "06:00"
         }
+    },
+    {
+        "model": "levelupapi.event",
+        "pk": 2,
+        "fields": {
+            "game": 1,
+            "description": "The battle for Earth begins at sea.", 
+            "date": "2023-07-02", 
+            "time": "08:00"
+        }
     }
 ]
