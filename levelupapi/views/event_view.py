@@ -16,6 +16,12 @@ class EventView(ViewSet):
     def list(self, request): 
 
         events = Event.objects.all()
+
+        # if request.auth.user.is_staff:
+        #     events = Event.objects.all()
+        # else:
+        #     events = Event.objects.filter(gamer__user=request.auth.user)
+
         serializer = EventSerializer(events, many=True)
         return Response(serializer.data)
 
@@ -23,4 +29,5 @@ class EventSerializer(serializers.ModelSerializer):
 
     class Meta: 
         model = Event 
-        fields = ('id', 'description', 'date', 'time', 'game')
+        fields = ('id', 'description', 'date', 'time', 'game', )
+        depth = 1
