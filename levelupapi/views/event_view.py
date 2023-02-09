@@ -19,29 +19,46 @@ class EventView(ViewSet):
 
         # if request.auth.user.is_staff:
         #     events = Event.objects.all()
+
+        #     if "game" in request.query_params:
+        #         if request.query_params['game'] == 1:
+        #             events = events.filter(date_completed__isnull=False)
+
+        #     if request.query_params['game'] == "all":
+        #         pass
+
         # else:
-        #     events = Event.objects.filter(gamer__user=request.auth.user)
+        #     events = Event.objects.filter(gamer_user=request.auth.user)
 
         serializer = EventSerializer(events, many=True)
         return Response(serializer.data)
 
-    def create(self, request): 
+    def create(self, request):
+        """Handle POST operations
+
+        Returns
+            Response -- JSON serialized game instance
+        """
         # gamer = Gamer.objects.get(user=request.auth.user)
-        game = Game.objects.get(pk=request.data['game'])
+        game = Game.objects.get(pk=request.data['game_id'])
 
         event = Event.objects.create(
             description=request.data['description'],
             date=request.data['date'],
-            time=request.data['time'], 
+            time=request.data['time'],
             game=game
         )
-
         serializer = EventSerializer(event)
         return Response(serializer.data)
+
+
+# class EventGamerSerializer(serializers.ModelSerializer): 
+#     class Meta: 
+#         model = Gamer 
+#         fields = ('full_name')
 
 class EventSerializer(serializers.ModelSerializer): 
 
     class Meta: 
         model = Event 
         fields = ('id', 'description', 'date', 'time', 'game', )
-        depth = 2

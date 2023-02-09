@@ -19,7 +19,6 @@ class GameTypeView(ViewSet):
         serializer = GameTypeSerializer(game_type)
         return Response(serializer.data)
 
-
     def list(self, request):
         """Handle GET requests to get all game types
 

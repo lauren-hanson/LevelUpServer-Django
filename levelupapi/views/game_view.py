@@ -21,7 +21,8 @@ class GameView(ViewSet):
         
         Returns 
             Response -- JSON serialized game instance"""
-        gamer = Gamer.objects.get(user=request.auth.user) 
+
+        gamer = Gamer.objects.get(user=request.auth.user)
         #declare gamer variable 
         #getting the user that is logged in based off token
         #request.auth.user is used to get the Gamer object based off the user
@@ -34,15 +35,15 @@ class GameView(ViewSet):
         game = Game.objects.create(
             title=request.data['title'],
             maker=request.data['maker'],
-            game_type=game_type,
-            gamer=gamer,
             num_of_players=request.data['num_of_players'],
-            skill_level=request.data['skill_level']
+            skill_level=request.data['skill_level'],
+            gamer=gamer,
+            game_type=game_type
         )
         # declare game variable and call create ORM method & pass all field as parameters to the function
 
         serializer = GameSerializer(game)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 class GameSerializer(serializers.ModelSerializer): 
