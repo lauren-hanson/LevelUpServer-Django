@@ -83,6 +83,14 @@ class EventView(ViewSet):
         event = Event.objects.get(pk=pk)
         event.attendees.add(gamer)
         return Response({'message': 'Gamer added'}, status=status.HTTP_201_CREATED)
+
+    @action(methods=['delete'], detail=True) #Accepts POST & since detail=True, url will include PK
+    def leave(self, request, pk):
+        """Post request for a user to sign up for an event"""
+        gamer = Gamer.objects.get(user=request.auth.user)
+        event = Event.objects.get(pk=pk)
+        event.attendees.remove(gamer)
+        return Response(None, status=status.HTTP_204_NO_CONTENT)
     
 # class EventGamerSerializer(serializers.ModelSerializer): 
 #     class Meta: 
