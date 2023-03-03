@@ -12,7 +12,7 @@ class EventView(ViewSet):
 
         event = Event.objects.get(pk=pk)
         serializer = EventSerializer(event)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     def list(self, request):
 
@@ -46,7 +46,10 @@ class EventView(ViewSet):
             Response -- JSON serialized game instance
         """
         # gamer = Gamer.objects.get(user=request.auth.user)
-        game = Game.objects.get(pk=request.data['game_id'])
+        try: 
+            game = Game.objects.get(pk=request.data['game_id'])
+        except Game.DoesNotExist: 
+            return Response({'message': "This game does not exist."}, status=status.HTTP_404_NOT_FOUND)
 
         event = Event.objects.create(
             description=request.data['description'],
@@ -64,12 +67,16 @@ class EventView(ViewSet):
             Response -- Empty body with 204 status code
         """
 
+        try:
+            game = Game.objects.get(pk=request.data['game'])
+        except Game.DoesNotExist:
+            return Response({'message': 'You sent an invalid game ID'}, status=status.HTTP_404_NOT_FOUND)
+            
         event = Event.objects.get(pk=pk)
         event.description = request.data["description"]
         event.time = request.data["time"]
         event.date = request.data["date"]
-
-        game = Game.objects.get(pk=request.data["game"])
+        # game = Game.objects.get(pk=request.data["game"])
         event.game = game
         event.save()
 
