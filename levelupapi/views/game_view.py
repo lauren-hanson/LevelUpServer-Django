@@ -7,9 +7,14 @@ from levelupapi.models import Game, Gamer, GameType
 class GameView(ViewSet): 
     
     def retrieve(self, request, pk): 
-        game = Game.objects.get(pk=pk)
-        serializer = GameSerializer(game) 
-        return Response(serializer.data)
+        try: 
+            game = Game.objects.get(pk=pk)
+            serializer = GameSerializer(game) 
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        
+        except Game.DoesNotExist: 
+            return Response(None, status=status.HTTP_404_NOT_FOUND)
+
 
     def list(self, request): 
         games = Game.objects.all()
