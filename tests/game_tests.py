@@ -1,8 +1,8 @@
 import json
+from rest_framework.authtoken.models import Token
 from rest_framework import status
 from rest_framework.test import APITestCase
 from levelupapi.models import GameType, Gamer, Game
-from rest_framework.authtoken.models import Token
 
 
 class GameTests(APITestCase):
@@ -10,6 +10,7 @@ class GameTests(APITestCase):
     # Add any fixtures you want to run to build the test database
     fixtures = ['users', 'tokens', 'gamers', 'game_types', 'games']
 
+    # creates resources before a test is run
     def setUp(self):
         self.gamer = Gamer.objects.first()
         token = Token.objects.get(user=self.gamer.user)
@@ -123,7 +124,7 @@ class GameTests(APITestCase):
         game = Game()
         game.title = "The Last Of Us"
         game.maker = "Naughty Dog"
-        game.game_type = GameType(pk=3)
+        game.game_type = GameType(pk=1)
         game.gamer = Gamer(pk=1)
         game.num_of_players = 4000
         game.skill_level = 10
