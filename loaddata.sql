@@ -1,12 +1,13 @@
-
 SELECT
-    game.title, 
-    game.description, 
-    game.min_player, 
-    game.max_player, 
-    game.game_type_id, 
-    game.gamer_id,
+    event.description, 
+    event.date, 
+    event.time,
+    event.game_id,
+    game.gamer_id, 
+    game.title as game_name,
     user.first_name || ' ' || user.last_name as full_name
-FROM levelupapi_game as game
-JOIN levelupapi_gamer as gamer ON game.gamer_id = levelupapi_game.id
-JOIN auth_user as user ON gamer.user_id = user.id
+FROM levelupapi_event event
+    JOIN levelupapi_game game ON event.game_id = game.id
+    JOIN auth_user user ON gamer.id = user.id
+    JOIN levelupapi_eventgamer eventgamer ON event.id = eventgamer.event_id 
+    JOIN levelupapi_gamer gamer ON eventgamer.gamer_id = gamer.id 
