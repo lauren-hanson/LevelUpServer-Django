@@ -96,5 +96,5 @@ class UserGameList(View):
         context = {
             "usergame_list": games_by_user
         }
-
+        
         return render(request, template, context)
